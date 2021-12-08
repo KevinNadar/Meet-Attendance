@@ -1,0 +1,1 @@
+https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=1011672478932-jgbcfg4mq1shi5a2jgu1v1v5kqkg2j5c.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A35763%2F&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.events.readonly&state=SHOiK16cWyKclo4FJBDQFcY6ytD3iG&access_type=offline
