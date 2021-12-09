@@ -6,16 +6,17 @@ Created on Thu Jul  1 11:34:09 2021
 @author: kevin
 """
 
+import os
 import gspread
 from datetime import date, datetime
 from Calendar import FetchEvent
 from Sheets import AttendanceRegister
 
-f = open('/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/output.txt', 'a')
-
 now = datetime.now().ctime()
 
-dt = date.today()
+dt = date.today()\
+
+f = open(f'/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/Logs/{dt}', 'w')
 
 f.write('\n' + now)
 
