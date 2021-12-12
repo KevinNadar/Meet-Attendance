@@ -6,7 +6,6 @@ Created on Thu Jul  1 11:34:09 2021
 @author: kevin
 """
 
-import os
 import gspread
 from datetime import date, datetime
 from Calendar import FetchEvent
@@ -18,7 +17,7 @@ dt = date.today()\
 
 f = open(f'/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/Logs/{dt}', 'w')
 
-f.write('\n' + now)
+f.write(now)
 
 # try:
 

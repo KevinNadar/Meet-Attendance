@@ -22,15 +22,15 @@ class AttendanceRegister:
         for sheet in sheets:
             times = list(map(dt.strptime, sheet.col_values(4)[1:], ['%H:%M:%S'] * len(sheet.col_values(4)[1:])))
             before = dt.strptime(sheet.cell(times.index(max(times)) + 2, 2).value, '%m/%d/%Y %H:%M:%S')
-            after  = dt.strptime(sheet.cell(times.index(max(times)) + 2, 3).value, '%m/%d/%Y %H:%M:%S')
+            after = dt.strptime(sheet.cell(times.index(max(times)) + 2, 3).value, '%m/%d/%Y %H:%M:%S')
             difference = after - before
             for event in events:
-                if dt.strptime(
-                    event['start']['dateTime'][:-6], '%Y-%m-%dT%H:%M:%S') <= before + difference / 2 <= dt.strptime(event['end']['dateTime'][:-6], '%Y-%m-%dT%H:%M:%S'):
+                if dt.strptime(event['start']['dateTime'][:-6], '%Y-%m-%dT%H:%M:%S') <= before + difference / 2 <= dt.strptime(event['end']['dateTime'][:-6], '%Y-%m-%dT%H:%M:%S'):
                     cal_event.append((event, sheet))
                     print(f'{event["summary"].split()[0]} lecture data in {sheet.title} worksheet')
                     self.textfile.write(f'\n{event["summary"].split()[0]} lecture data in {sheet.title} worksheet')
         return cal_event
+
     def register_attendance(self, tup):
         def register_sheet(event_to_mark, worksheet):
             now = dt.strptime(worksheet.cell(2, 2).value, '%m/%d/%Y %H:%M:%S')
@@ -38,7 +38,7 @@ class AttendanceRegister:
             present_students = worksheet.col_values(1)[1:]
             students_workbook = self.client.open(event_to_mark['summary'].split(' ')[0] + ' Attendance Register')
 # =============================================================================
-#             TIP: Manual Overide;
+#             TIP: Manual Override;
 #             students_workbook = self.client.open('<name_of_workbook>')
 # =============================================================================
             student_worksheet = students_workbook.worksheet(now.strftime('%B'))
@@ -62,7 +62,7 @@ class AttendanceRegister:
                 i += 1
             if not student_list:
                 self.textfile.write('\nNo student in classroom')
-                raise ValueError('No student in classsroom')
+                raise ValueError('No student in classroom')
             register.loc[list(set(register.index) - set(student_list)), now.strftime('%A %d')] = 'Absent'
             register['Days Present'] = register.replace(['', 'Absent', 'Present'], [0, 0, 1]).sum(axis='columns')
             student_worksheet.update('A2', register.values.tolist())

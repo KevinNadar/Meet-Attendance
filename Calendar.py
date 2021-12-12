@@ -45,10 +45,8 @@ def main(day, month, year):
     service = build('calendar', 'v3', credentials=creds)
 
     # Call the Calendar API
-    timeMin = dt(year, month, day, 0, 0, 0, 0).strftime(
-        format='%Y-%m-%dT%H:%M:%SZ')
-    timeMax = dt(year, month, day, 23, 59, 59, 999999).strftime(
-        format='%Y-%m-%dT%H:%M:%SZ')
+    timeMin = dt(year, month, day, 0, 0, 0, 0).strftime('%Y-%m-%dT%H:%M:%SZ')
+    timeMax = dt(year, month, day, 23, 59, 59, 999999).strftime('%Y-%m-%dT%H:%M:%SZ')
     # print('Getting the upcoming 10 events')
     # now = dt.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     events_result = service.events().list(
