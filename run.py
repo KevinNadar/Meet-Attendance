@@ -14,35 +14,38 @@ from Sheets import AttendanceRegister
 date = datetime.date.today()
 time = datetime.datetime.now().ctime()
 
-file = open(f'/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/Logs/{date}', 'w')
 
-file.write(time)
+def main():
 
-# try:
+    file = open(f'/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/Logs/{date}', 'w')
 
-client = gspread.oauth()
+    file.write(time)
 
-instance = FetchEvent(date)
+    client = gspread.oauth()
 
-mark = instance.events_to_attend(
-    instance.latest_events, 'This Google Calendar event is going to be \
+    instance = FetchEvent(date)
+
+    mark = instance.events_to_attend(
+        instance.latest_events, 'This Google Calendar event is going to be \
 accounted in the Meet Attendance.'
-)
+    )
 
-spreadsheet = client.open('Meet Attendance 07/02/2021')
+    spreadsheet = client.open('Meet Attendance 07/02/2021')
 
-attendanceRegister = AttendanceRegister(client, spreadsheet, file)
+    attendanceRegister = AttendanceRegister(client, spreadsheet, file)
 
-ev_to_ws = attendanceRegister.event_to_worksheet(mark, date)
+    ev_to_ws = attendanceRegister.event_to_worksheet(mark, date)
+    print(ev_to_ws)
+    attendanceRegister.register_attendance(ev_to_ws)
 
-attendanceRegister.register_attendance(ev_to_ws)
+    attendanceRegister.delete_sheet(spreadsheet, spreadsheet.worksheets()[-1])
 
-attendanceRegister.delete_sheet(spreadsheet, spreadsheet.worksheets()[-1])
+    print('Done!')
 
-print('Done!')
-file.write('\nDone!\n')
+    file.write('\nDone!\n')
 
-# except Exception as e:
-#     print(e)
+    file.close()
 
-file.close()
+
+if __name__ == '__main__':
+    main()

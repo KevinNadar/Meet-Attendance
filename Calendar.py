@@ -29,7 +29,9 @@ def main(day, month, year):
     # created automatically when the authorization flow completes for the first
     # time.
     if os.path.exists('/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/token.json'):
-        creds = Credentials.from_authorized_user_file('/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/token.json', SCOPES)
+        creds = Credentials.from_authorized_user_file(
+            '/home/kevin/.config/spyder-py3/Projects/Meet-Attendance/token.json', SCOPES
+        )
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -93,5 +95,5 @@ class FetchEvent:
 
 
 if __name__ == '__main__':
-    output = main(7, 12, 2021)
+    output = main(11, 1, 2022)
     pprint(output)

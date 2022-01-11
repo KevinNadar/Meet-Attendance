@@ -32,9 +32,8 @@ class AttendanceRegister:
         return cal_event
 
     def register_attendance(self, tup):
-        def register_sheet(event_to_mark, worksheet):
+        for event_to_mark, worksheet in tup:
             now = dt.strptime(worksheet.cell(2, 2).value, '%m/%d/%Y %H:%M:%S')
-            # FIXME: Update code
             present_students = worksheet.col_values(1)[1:]
             students_workbook = self.client.open(event_to_mark['summary'].split(' ')[0] + ' Attendance Register')
 # =============================================================================
@@ -66,8 +65,6 @@ class AttendanceRegister:
             register.loc[list(set(register.index) - set(student_list)), now.strftime('%A %d')] = 'Absent'
             register['Days Present'] = register.replace(['', 'Absent', 'Present'], [0, 0, 1]).sum(axis='columns')
             student_worksheet.update('A2', register.values.tolist())
-        for a, b in tup:
-            register_sheet(a, b)
 
     def delete_sheet(self, wb, ws):
         if wb.worksheets().__len__() > 7:
